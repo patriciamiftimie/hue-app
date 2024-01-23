@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>472806285291-dpab45ndngtsqrmj5jr2d9g0qfh0ppva.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.472806285291-dpab45ndngtsqrmj5jr2d9g0qfh0ppva</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCfdExvkSN-l1ITmUftgfnNKzgbXuGNcw8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>472806285291</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.hue</string>
+	<key>PROJECT_ID</key>
+	<string>hueapp-3c5cf</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hueapp-3c5cf.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:472806285291:ios:777eb429226b2f08d4c3ae</string>
+</dict>
+</plist>

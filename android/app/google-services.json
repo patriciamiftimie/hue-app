@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "472806285291",
+    "project_id": "hueapp-3c5cf",
+    "storage_bucket": "hueapp-3c5cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472806285291:android:0a30cd15735893cad4c3ae",
+        "android_client_info": {
+          "package_name": "com.example.hue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472806285291-5krh3vdq1p0nsvmti6km7rds1lnesug6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC87SgEBnjUB2TDU09ujhv5C3R7_Dywxws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472806285291-5krh3vdq1p0nsvmti6km7rds1lnesug6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "472806285291-dpab45ndngtsqrmj5jr2d9g0qfh0ppva.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hue"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
