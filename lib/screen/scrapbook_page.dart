@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hue/services/coloring_page_service.dart';
 
@@ -29,7 +30,9 @@ class _ScrapbookPageState extends State<ScrapbookPage> {
       await audioPlayer.play(urlSource);
       setState(() {});
     } catch (e) {
-      print('Error play recording: $e');
+      if (kDebugMode) {
+        print('Error play recording: $e');
+      }
     }
   }
 
@@ -202,10 +205,10 @@ class _ScrapbookPageState extends State<ScrapbookPage> {
           style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.bold, color: customPurple),
         ),
-        _buildMoodImage(mood),
+        Flexible(child: _buildMoodImage(mood)),
         Text(
-          ' ${mood}/5',
-          style: TextStyle(fontSize: 18, color: Colors.grey[700]),
+          ' $mood/5',
+          style: TextStyle(fontSize: 16, color: Colors.grey[700]),
         ),
       ],
     );
@@ -283,11 +286,13 @@ Widget voiceWidget(String url, Future<void> Function(String) playRecording) {
                 iconSize: 40,
                 onPressed: () => playRecording(url),
                 icon: const Icon(Icons.play_arrow_rounded)),
-            Container(
-              height: 2, // Adjust the height of the line as needed
-              width: 250, // Adjust the width of the line as needed
-              color: Colors.grey[500],
-            ),
+            Flexible(
+              child: Container(
+                height: 2,
+                width: 250,
+                color: Colors.grey[500],
+              ),
+            )
           ],
         ),
       ]);

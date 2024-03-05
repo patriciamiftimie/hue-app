@@ -1,0 +1,44 @@
+Privacy Policy for Hue
+
+Last Updated: 19/02/2024
+
+This Privacy Policy describes how Hue collects, uses, and discloses your personal information when you use our application. We wish to mention that Hue is part of an undergraduate project and is experimental in nature.
+
+1. Information Collection and Use
+
+We collect the following types of information:
+
+- Personal Information: We do not collect personally identifiable information unless explicitly provided by you (e.g., email address). Your consent to this collection is given when you provide such information.
+
+- Usage Data: We collect data on how the application is accessed and used ("Usage Data"). This Usage Data may include information such as your device's Internet Protocol address (e.g., IP address), browser type, browser version, our application's pages that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers, and other diagnostic data.
+
+- API Data: Given the use of the OpenAI API, certain inputs may be processed to generate content. These inputs are sent to OpenAI and are subject to their privacy policy.
+
+2. Data Use
+
+We use the collected data for various purposes:
+
+- To provide and maintain our service
+- To notify you about changes to our service
+- To allow you to participate in interactive features of our service when you choose to do so
+- To provide customer support
+- To gather analysis or valuable information so that we can improve our service
+- To monitor the usage of our service
+- To detect, prevent, and address technical issues
+
+3. Data Storage and Security
+
+The security of your data is important to us, but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Information, we cannot guarantee its absolute security.
+
+4. Data Sharing
+
+We do not share or sell your personal information with third parties except as necessary to provide the application's functionality (e.g., interacting with the OpenAI API), comply with the law, or protect our rights.
+
+5. Changes to This Privacy Policy
+
+We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.
+
+6. Contact Us
+
+If you have any questions about this Privacy Policy, please contact us at pxi092@student.bham.ac.uk.
+

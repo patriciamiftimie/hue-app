@@ -41,7 +41,7 @@ class _EmojiScaleState extends State<EmojiScale> {
         child: Column(
           children: [
             Text(
-              'How are you feeling today?',
+              'How are you feeling today?*',
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

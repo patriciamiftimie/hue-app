@@ -45,6 +45,11 @@ dependencies:
   record: ^5.0.4
   audioplayers: ^5.2.1
   path_provider: ^2.1.1
+  dart_openai: ^5.0.0
+  flutter_linkify: ^6.0.0
+  url_launcher: ^6.2.4
+  firebase_messaging: ^14.7.15
+  audio_session: ^0.1.18
 
 
 dev_dependencies:
@@ -57,6 +62,14 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: false
+  ios: true
+  image_path: "images/widget.png"
+  image_path_ios: "images/widget.png"
+  remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,7 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hue/theme/colors.dart';
-
-import '../services/user_profile_service.dart';
 
 class CoinCount extends StatefulWidget {
   const CoinCount({super.key, required this.uid});
@@ -12,40 +11,39 @@ class CoinCount extends StatefulWidget {
 }
 
 class _CoinCountState extends State<CoinCount> {
-  int _coins = 0; // Default rating
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserCoins();
-  }
-
-  Future<void> _fetchUserCoins() async {
-    final coins = await UserProfileService().fetchUserCoins(widget.uid);
-    setState(() {
-      _coins = coins ?? 0;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
-      width: 60,
-      height: 25,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          Icon(
-            Icons.circle,
-            color: customYellow,
-          ),
-          Text(
-            ' $_coins',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
-    );
+    return StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(widget.uid)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          }
+
+          final userData = snapshot.data!.data() as Map<String, dynamic>;
+          final coinBalance = userData['coins'] ?? 0;
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            width: 70,
+            height: 25,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                Icon(
+                  Icons.circle,
+                  color: customYellow,
+                ),
+                Text(
+                  ' $coinBalance',
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          );
+        });
   }
 }

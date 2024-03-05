@@ -21,11 +21,6 @@ class _ScrapbookScreenState extends State<ScrapbookScreen> {
     return '${date.day}-${date.month}-${date.year}';
   }
 
-  String _getCurrentDate() {
-    final now = DateTime.now();
-    return '${now.day}-${now.month}-${now.year}';
-  }
-
   @override
   void initState() {
     super.initState();
@@ -45,7 +40,9 @@ class _ScrapbookScreenState extends State<ScrapbookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(padding: const EdgeInsets.all(20), child: _buildCalendar()),
+      body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildCalendar()),
     );
   }
 
@@ -88,42 +85,30 @@ class _ScrapbookScreenState extends State<ScrapbookScreen> {
               fontSize: 14,
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              if (mood == 0) {
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ScrapbookPage(
-                      date: _getDate(date),
-                      uid: widget.uid,
-                    ),
-                  ),
-                );
-              }
-            },
-            child: Image.asset(
-              'images/phase$mood.png',
-              fit: BoxFit.cover,
-              height: 60, // Adjust the height as needed
-            ),
+          Flexible(
+            child: GestureDetector(
+                onTap: () {
+                  if (mood == 0) {
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ScrapbookPage(
+                          date: _getDate(date),
+                          uid: widget.uid,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Image.asset(
+                  'images/phase$mood.png',
+                  fit: BoxFit.cover,
+                  height: 60,
+                )),
           ),
         ],
       ),
     );
-  }
-
-  Widget image(int mood) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Container(
-          width: double.infinity,
-          height: 30,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('images/phase$mood.png'),
-                  fit: BoxFit.cover)),
-        ));
   }
 }

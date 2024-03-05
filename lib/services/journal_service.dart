@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import '../model/journal_entry.dart';
 
 class JournalService {
@@ -40,7 +41,9 @@ class JournalService {
         return null;
       }
     } catch (e) {
-      print('Error fetching user mood: $e');
+      if (kDebugMode) {
+        print('Error fetching user mood: $e');
+      }
       return null;
     }
   }
@@ -57,7 +60,9 @@ class JournalService {
         return 0;
       }
     } catch (e) {
-      print('Error fetching user mood: $e');
+      if (kDebugMode) {
+        print('Error fetching user mood: $e');
+      }
       return 0;
     }
   }
@@ -82,7 +87,9 @@ class JournalService {
 
       return entriesMap;
     } catch (e) {
-      print('Error fetching entries for month: $e');
+      if (kDebugMode) {
+        print('Error fetching entries for month: $e');
+      }
       return {};
     }
   }
@@ -115,8 +122,28 @@ class JournalService {
 
       return entriesMap;
     } catch (e) {
-      print('Error fetching entries for month: $e');
+      if (kDebugMode) {
+        print('Error fetching entries for month: $e');
+      }
       return {};
+    }
+  }
+
+  Future<List<dynamic>?> fetchUserEmotions(String uid) async {
+    try {
+      final snapshot =
+          await journalCollection.doc(uid).collection(_getDate()).get();
+      if (snapshot.docs.isNotEmpty) {
+        JournalEntry entry = JournalEntry.fromMap(snapshot.docs.first.data());
+        return entry.entryEmotions;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching user image: $e');
+      }
+      return null;
     }
   }
 
@@ -131,7 +158,9 @@ class JournalService {
         return null;
       }
     } catch (e) {
-      print('Error fetching user image: $e');
+      if (kDebugMode) {
+        print('Error fetching user image: $e');
+      }
       return null;
     }
   }
@@ -147,7 +176,9 @@ class JournalService {
         return null;
       }
     } catch (e) {
-      print('Error fetching user text: $e');
+      if (kDebugMode) {
+        print('Error fetching user text: $e');
+      }
       return null;
     }
   }
@@ -163,7 +194,9 @@ class JournalService {
         return null;
       }
     } catch (e) {
-      print('Error fetching user voice note: $e');
+      if (kDebugMode) {
+        print('Error fetching user voice note: $e');
+      }
       return null;
     }
   }

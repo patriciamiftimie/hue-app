@@ -114,19 +114,29 @@ class _GratitudeEntryState extends State<GratitudeEntry> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
-                  onPressed: () => _getImage(ImageSource.gallery),
+              Flexible(
+                child: ElevatedButton(
+                    onPressed: () => _getImage(ImageSource.gallery),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: customYellow,
+                        foregroundColor: customPurple),
+                    child: const Text(
+                      "Choose from gallery",
+                      textAlign: TextAlign.center,
+                    )),
+              ),
+              Flexible(
+                child: ElevatedButton(
+                  onPressed: () => _getImage(ImageSource.camera),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: customYellow,
                       foregroundColor: customPurple),
-                  child: const Text("Choose from gallery")),
-              ElevatedButton(
-                onPressed: () => _getImage(ImageSource.camera),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: customYellow,
-                    foregroundColor: customPurple),
-                child: const Text("Take a picture"),
-              ),
+                  child: const Text(
+                    "Take a picture",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
             ],
           ),
         ],

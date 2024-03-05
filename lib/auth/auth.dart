@@ -9,7 +9,9 @@ Future<void> createUserDocument(User user, String name) async {
   return users.doc(user.uid).set({
     'name': name,
     'email': user.email,
-    'createdAt': FieldValue.serverTimestamp(),
+    'coins': 0,
+    'owned_palettes': ['hue000'],
+    'created_at': FieldValue.serverTimestamp(),
   });
 }
 

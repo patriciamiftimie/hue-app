@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:audio_session/audio_session.dart' as audio_session;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hue/theme/colors.dart';
 import 'package:path_provider/path_provider.dart';
@@ -45,11 +47,15 @@ class _WorryEntryState extends State<WorryEntry> {
         String downloadUrl = await storageReference.getDownloadURL();
         return downloadUrl;
       } else {
-        print('File does not exist: ${file.path}');
+        if (kDebugMode) {
+          print('File does not exist: ${file.path}');
+        }
         return null;
       }
     } catch (e) {
-      print('Error uploading recording: $e');
+      if (kDebugMode) {
+        print('Error uploading recording: $e');
+      }
       return null;
     }
   }
@@ -82,20 +88,34 @@ class _WorryEntryState extends State<WorryEntry> {
     try {
       if (await audioRecord.hasPermission()) {
         final directory = await getApplicationDocumentsDirectory();
-        var path = directory.path;
-        await audioRecord.start(const RecordConfig(), path: path);
+        String fileName = _getUniqueFileName();
+        var myPath = '${directory.path}/$fileName';
+        final session = await audio_session.AudioSession.instance;
+        await session
+            .configure(const audio_session.AudioSessionConfiguration.speech());
+        await session.setActive(true);
+        await audioRecord.start(const RecordConfig(), path: myPath);
         setState(() {
           isRecording = true;
         });
       }
     } catch (e) {
-      print('Error start recording: $e');
+      if (kDebugMode) {
+        print('Error start recording: $e');
+      }
     }
+  }
+
+  String _getUniqueFileName() {
+    final now = DateTime.now();
+    return 'recording_${now.year}-${now.month}-${now.day}_${now.hour}-${now.minute}-${now.second}.m4a';
   }
 
   Future<void> stopRecording() async {
     try {
       String? path = await audioRecord.stop();
+      final session = await audio_session.AudioSession.instance;
+      await session.setActive(false);
       if (path != null) {
         String? recordingUrl =
             await uploadRecording(File(path), widget.uid, _getDate());
@@ -107,7 +127,9 @@ class _WorryEntryState extends State<WorryEntry> {
         }
       }
     } catch (e) {
-      print('Error stop recording: $e');
+      if (kDebugMode) {
+        print('Error stop recording: $e');
+      }
     }
   }
 
@@ -117,7 +139,9 @@ class _WorryEntryState extends State<WorryEntry> {
       await audioPlayer.play(urlSource);
       setState(() {});
     } catch (e) {
-      print('Error play recording: $e');
+      if (kDebugMode) {
+        print('Error play recording: $e');
+      }
     }
   }
 
@@ -149,11 +173,12 @@ class _WorryEntryState extends State<WorryEntry> {
                         iconSize: 40,
                         onPressed: playRecording,
                         icon: const Icon(Icons.play_arrow_rounded)),
-                    Container(
-                      height: 2, // Adjust the height of the line as needed
-                      width: 280, // Adjust the width of the line as needed
+                    Flexible(
+                        child: Container(
+                      height: 2,
+                      width: 280,
                       color: Colors.grey[500],
-                    ),
+                    )),
                   ],
                 ),
           const SizedBox(height: 10),
@@ -168,18 +193,26 @@ class _WorryEntryState extends State<WorryEntry> {
                   child: isRecording
                       ? const Icon(Icons.pause_rounded)
                       : const Icon(Icons.mic_rounded)),
-              if (isRecording) const Text('Recording...'),
+              if (isRecording)
+                const Text(
+                  'Recording...',
+                  style: TextStyle(),
+                ),
               const SizedBox(
                 height: 25,
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    widget.onVoiceNoteUpload(_recordingUrl!);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: customYellow,
-                      foregroundColor: customPurple),
-                  child: const Text("Add new voice note"))
+              Flexible(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        widget.onVoiceNoteUpload(_recordingUrl!);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: customYellow,
+                          foregroundColor: customPurple),
+                      child: const Text(
+                        "Save voice note",
+                        textAlign: TextAlign.center,
+                      )))
             ],
           ),
         ],

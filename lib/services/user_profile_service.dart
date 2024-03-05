@@ -17,6 +17,7 @@ class UserProfileService {
       'email': user.email,
       'name': name,
       'coins': 0,
+      'owned_palettes': ['hue000'],
       'created_at': FieldValue.serverTimestamp(),
     });
   }
@@ -80,6 +81,14 @@ class UserProfileService {
     await usersCollection.doc(uid).update(user.toMap());
   }
 
+  Future<void> addToOwnedPalettes(String userId, String paletteId) async {
+    final userDocRef = usersCollection.doc(userId);
+
+    await userDocRef.update({
+      'owned_palettes': FieldValue.arrayUnion([paletteId]),
+    });
+  }
+
   Future<void> updateCoins(String uid, int amount) async {
     final user = await fetchUser(uid);
     if (user != null) {
@@ -87,6 +96,7 @@ class UserProfileService {
           name: user.name,
           email: user.email,
           coins: user.coins + amount,
+          ownedPalettes: user.ownedPalettes,
           created: user.created);
       await usersCollection.doc(uid).update(updatedUser.toMap());
     }

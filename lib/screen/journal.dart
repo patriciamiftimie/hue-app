@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hue/widgets/emoji_scale.dart';
+import 'package:hue/widgets/emotions_entry.dart';
 import 'package:hue/widgets/gratitude_entry.dart';
 import 'package:hue/widgets/reframe_entry.dart';
 import 'package:hue/widgets/worry_entry.dart';
@@ -26,6 +27,7 @@ class _JournalPageState extends State<JournalPage> {
   JournalEntry? _currentEntry;
   String? _currentEntryId;
   int _entryMood = 0;
+  List<dynamic> _entryEmotions = [];
   String _entryImageUrl = "";
   String _entryVoiceNoteUrl = "";
   String _entryText = "";
@@ -84,6 +86,11 @@ class _JournalPageState extends State<JournalPage> {
               const SizedBox(
                 height: 30,
               ),
+              EmotionsEntry(
+                  uid: widget.uid, onEmotionsUpload: _handleEmotionsUpload),
+              const SizedBox(
+                height: 30,
+              ),
               GratitudeEntry(
                   uid: widget.uid, onImageUpload: _handleImageUpload),
               const SizedBox(
@@ -104,9 +111,19 @@ class _JournalPageState extends State<JournalPage> {
       ),
       floatingActionButton: FloatingActionButton.large(
         onPressed: () {
-          _saveOrUpdateEntry();
-
-          Navigator.pop(context);
+          if (_currentEntry == null && _entryMood == 0) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Please rate your mood before saving.',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            );
+          } else {
+            _saveOrUpdateEntry();
+            Navigator.pop(context);
+          }
         },
         heroTag: 'saveJournalEntry',
         backgroundColor: const Color(0xff735DA5),
@@ -126,6 +143,16 @@ class _JournalPageState extends State<JournalPage> {
         _currentEntry!.entryMood = mood;
       } else {
         _entryMood = mood;
+      }
+    });
+  }
+
+  void _handleEmotionsUpload(List<dynamic> emotions) {
+    setState(() {
+      if (_currentEntry != null) {
+        _currentEntry!.entryEmotions = emotions;
+      } else {
+        _entryEmotions = emotions;
       }
     });
   }
@@ -167,15 +194,15 @@ class _JournalPageState extends State<JournalPage> {
     } else {
       final newEntry = JournalEntry(
         entryMood: _entryMood,
+        entryEmotions: _entryEmotions,
         entryImageURL: _entryImageUrl,
         entryVoiceNoteURL: _entryVoiceNoteUrl,
         entryText: _entryText,
         timestamp: Timestamp.now(),
       );
       await _journalService.createEntry(newEntry, uid);
-      updateCoins(5);
+      updateCoins(10);
     }
-    // Fetch the updated entry
     await _fetchJournalEntry();
   }
 

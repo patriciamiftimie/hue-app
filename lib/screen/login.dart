@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hue/screen/privacy_policy.dart';
 import 'package:hue/theme/colors.dart';
 
 import '../auth/auth.dart';
@@ -16,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  bool _passwordVisible = false;
 
   void showRegistrationFailedMessage() {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -44,6 +46,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _passwordVisible = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: customWhite,
@@ -66,16 +74,38 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               image(),
               const SizedBox(height: 20),
               emailTextbox(),
               const SizedBox(height: 20),
               passwordTextbox(),
-              const SizedBox(height: 30),
-              registerButton(),
               const SizedBox(height: 20),
-              loginButton(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PrivacyPolicyPage()),
+                  );
+                },
+                child: Text(
+                  "View our Privacy Policy",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: customAzure,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  registerButton(),
+                  loginButton(),
+                ],
+              )
             ],
           ),
         ),
@@ -152,11 +182,24 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TextField(
           controller: passwordController,
-          decoration: const InputDecoration(
-              labelText: 'Password', labelStyle: TextStyle(fontSize: 20)),
+          decoration: InputDecoration(
+            labelText: 'Password',
+            labelStyle: const TextStyle(fontSize: 20),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                color: customPurple,
+              ),
+              onPressed: () {
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
           style: const TextStyle(fontSize: 20, color: Colors.black),
           cursorColor: customBlack,
-          obscureText: true,
+          obscureText: !_passwordVisible,
         ));
   }
 
@@ -178,11 +221,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Container(
-          width: 300,
+          width: 200,
           height: 230,
           decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('images/phase2.png'), fit: BoxFit.cover)),
+                  image: AssetImage('images/moon-companion.png'),
+                  fit: BoxFit.cover)),
         ));
   }
 }
